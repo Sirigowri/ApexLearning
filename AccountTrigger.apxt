@@ -1,0 +1,14 @@
+/* *****************Scenario 1: Do not allow deletion of Account the locked__c field is checked  ******************/
+/* *****************Scenario 2: Do not allow updation of Account the locked__c field is checked  ******************/
+/*******************Scenario 3: Create a Invoice Record when the generateInvoice is selected on updation ***********/
+trigger AccountTrigger on Account (before delete,before update, after update) {    
+    if(Trigger.isDelete && Trigger.isBefore){
+        System.debug('Inside if of delete trigger');
+        AccountTriggerHandler.beforeDeleteValidator(Trigger.old);//Scenario1
+    }    
+    if(Trigger.isUpdate && Trigger.isBefore){
+        System.debug('Inside if of update trigger');
+        //AccountTriggerHandler.beforeUpdateValidator(Trigger.new);//Scenario 2
+        AccountTriggerHandler.invoiceUpdateValidator(Trigger.new);//Scenario 3
+    }   
+}
